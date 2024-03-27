@@ -42,10 +42,14 @@ class EarlyRetirement(models.Model):
          ['&', ('employee_id', '=', self.employee_id.id), ('state', '=', 'open')])
       self.date_hired = recruited.date_start
 
-   @api.depends('employee_id')
+   @api.model
+   @api.depends('date_of_birth')
    def _employee_age(self):
-      for rec in self:
+      if self.date_of_birth:
+         d2 = datetime.now().date()
 
-         age = self.env['hr.employee'].search(
-            [('id', '=', rec.employee_id.id)])
-         rec.age = age.employee_age
+         date_difference = d2.year - self.date_of_birth.year
+
+         self.age = date_difference
+      else:
+         self.age = 0.0
