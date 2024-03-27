@@ -22,5 +22,6 @@
     ],
     'assets': {},
     'installable': True,
-    'application': True,
+    'application': False,
+    'images': ['static/description/banner.jpg'],
 }
